@@ -1,0 +1,3 @@
+# Namumark syntax remover
+
+## Usage

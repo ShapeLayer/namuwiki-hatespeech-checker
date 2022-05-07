@@ -1,0 +1,6 @@
+transformers
+sqlalchemy
+ijson
+kss
+namuwiki-extractor
+
