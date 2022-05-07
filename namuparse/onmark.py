@@ -36,13 +36,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import re
 from datetime import datetime
 
-class onmark_parse:
+class onmarkParse:
     def __init__(self, data: str):
         self.data = data
     
     def __str__(self):
         return self.data
     
+    def processing(string: str) -> str:
+        parsing: onmarkParse = onmarkParse(string)
+        return parsing.remove_tags()
+
     def remove_tags(self):
         result = self.data
         result = self.remove_text_decoration(result)
@@ -125,5 +129,5 @@ class onmark_parse:
         return data
 
 if __name__ == '__main__':
-    parsed: onmark_parse = onmark_parse("'''testhighlighter'''")
+    parsed: onmarkParse = onmarkParse("'''testhighlighter'''")
     print(parsed.remove_tags())
