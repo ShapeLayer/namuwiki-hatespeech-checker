@@ -127,7 +127,24 @@ class onmarkParse:
 
     def process_redirect(self, data: str) -> str:
         return data
+    
+    def process_table(self, data: str) -> str:
+        table_regex = {
+            'total': re.compile(r"((?:(?:(?:(?:\|\|)+)|(?:\|[^|]+\|(?:\|\|)*))\n?(?:(?:(?!\|\|).)+))(?:(?:\|\||\|\|\n|(?:\|\|)+(?!\n)(?:(?:(?!\|\|).)+)\n*)*)\|\|)\n", re.MULTILINE),
+            'cell': re.compile(r"((?:\|\|)+)((?:(?!\|\|).)*)", re.MULTILINE), # $1 = ||?, $2 = body
+            'caption': re.compile(r"^\|([^|]+)\|", re.MULTILINE)
+        }
+        content = ''
+        res = re.findall(table_regex['total'], data)
+        for table in res:
+            row = re.findall(table_regex['cell'], table)
+            for partition, cell in row:
+                content += cell
+                print(cell)
+        data = re.sub(table_regex['total'], content, data)
+        return data
 
 if __name__ == '__main__':
-    parsed: onmarkParse = onmarkParse("'''testhighlighter'''")
-    print(parsed.remove_tags())
+    #parsed: onmarkParse = onmarkParse("'''testhighlighter'''")
+    #print(parsed.remove_tags())
+    print(onmarkParse.process_table(None, open('../in.in', encoding='utf-8').read()))

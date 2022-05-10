@@ -10,6 +10,7 @@ class Processing:
 
     def preprocessing(self) -> None:
         self.string = onmarkParse.replace_macros(None, self.string)
+        self.string = onmarkParse.process_table(None, self.string)
 
     def processing(string: str) -> str:
         proc: Processing = Processing(string)
